@@ -18,4 +18,11 @@
         public const string RoleClaims = nameof(RoleClaims);
         public const string Schools = nameof(Schools);
     }
+
+    public record SchoolPermission(string Action, string Feature, string Description, bool IsBasic = false, bool IsRoot = false)
+    {
+        public string Name => NameFor(Action, Feature);
+
+        public static string NameFor(string action, string feature) => $"Permission.{feature}.{action}";
+    }
 }
