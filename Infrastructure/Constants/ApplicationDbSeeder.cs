@@ -60,6 +60,11 @@ namespace Infrastructure.Constants
                 else if (roleName == RoleContants.Admin)
                 {
                     await AssignPermissionsToRole(SchoolPermissions.Admin, incomingRole, ct);
+
+                    if (_tenantInfoContextAccessor.MultiTenantContext?.TenantInfo.Id == TenancyConstants.Root)
+                    {
+                        await AssignPermissionsToRole(SchoolPermissions.Root, incomingRole, ct);
+                    }
                 }
             }
         }
