@@ -30,6 +30,35 @@ namespace Infrastructure.Constants
                 if (await _applicationDbContext.Database.CanConnectAsync(cancellationToken))
                 {
                     // Seeding data
+                    // Default Roles > Assign permissions and claims
+                    // Users > Assign roles
+                }
+            }
+        }
+
+        private async Task InitializeDefaultRolesAsync(CancellationToken ct)
+        {
+            foreach (var roleName in RoleContants.DefaultRoles)
+            {
+                if (await _roleManager.Roles.SingleOrDefaultAsync(role => role.Name == roleName, ct) is not ApplicationRole incomingRole)
+                {
+                    incomingRole = new ApplicationRole()
+                    {
+                        Name = roleName,
+                        Description = $"{roleName} Role"
+                    };
+
+                    await _roleManager.CreateAsync(incomingRole);
+                }
+
+                // Assign Permissions
+
+                if (roleName == RoleContants.Basic)
+                {
+                    // Assign Basic Permissions
+                } else if (roleName == RoleContants.Admin)
+                {
+                    // Assign Admin Permissions
                 }
             }
         }
