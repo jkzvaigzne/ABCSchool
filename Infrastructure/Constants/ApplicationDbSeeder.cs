@@ -31,6 +31,7 @@ namespace Infrastructure.Constants
                 {
                     // Seeding data
                     // Default Roles > Assign permissions and claims
+                    await InitializeDatabaseAsync(cancellationToken);
                     // Users > Assign roles
                 }
             }
