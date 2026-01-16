@@ -21,7 +21,7 @@ namespace Infrastructure.Constants
         public const string Schools = nameof(Schools);
     }
 
-    public record SchoolPermission(string Action, string Feature, string Description, string Group, bool IsBasic = false, bool IsRoot = false)
+    public record SchoolPermission(string Action, string Feature, string Description, string Group = "", bool IsBasic = false, bool IsRoot = false)
     {
         public string Name => NameFor(Action, Feature);
 

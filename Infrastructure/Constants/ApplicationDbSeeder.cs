@@ -62,5 +62,30 @@ namespace Infrastructure.Constants
                 }
             }
         }
+
+        private async Task AssignPermissionsToRole(
+            IReadOnlyList<SchoolPermission> rolePermissions,
+            ApplicationRole role,
+            CancellationToken ct)
+        {
+            var currentClaims = await _roleManager.GetClaimsAsync(role);
+
+            foreach (var rolePermission in rolePermissions)
+            {
+                if (!currentClaims.Any(c => c.Type == ClaimConstants.Permission && c.Value == rolePermission.Name))
+                {
+                    await _applicationDbContext.RoleClaims.AddAsync(new ApplicationRoleClaim
+                    {
+                        RoleId = role.Id,
+                        ClaimType = ClaimConstants.Permission,
+                        ClaimValue = rolePermission.Name,
+                        Description = rolePermission.Description,
+                        Group = rolePermission.Group
+                    }, ct);
+
+                    await _applicationDbContext.SaveChangesAsync(ct);
+                }
+            }
+        }
     }
 }
