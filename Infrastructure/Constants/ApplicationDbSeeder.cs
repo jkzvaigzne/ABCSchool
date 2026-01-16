@@ -55,10 +55,11 @@ namespace Infrastructure.Constants
 
                 if (roleName == RoleContants.Basic)
                 {
-                    // Assign Basic Permissions
-                } else if (roleName == RoleContants.Admin)
+                    await AssignPermissionsToRole(SchoolPermissions.Basic, incomingRole, ct);
+                } 
+                else if (roleName == RoleContants.Admin)
                 {
-                    // Assign Admin Permissions
+                    await AssignPermissionsToRole(SchoolPermissions.Admin, incomingRole, ct);
                 }
             }
         }
